@@ -188,11 +188,6 @@ Add the correct display in Chrome and Safari.
  * Removes the default spacing and border for appropriate elements.
  */
 
-
-p {
-  margin: 0;
-}
-
 /**
  * Tailwind custom reset styles
  */
@@ -268,19 +263,10 @@ body {
  * https://github.com/tailwindcss/tailwindcss/issues/362
  */
 
-img {
-  border-style: solid;
-}
-
 /**
  * Reset links to optimize for opt-in styling instead of
  * opt-out.
  */
-
-a {
-  color: inherit;
-  text-decoration: inherit;
-}
 
 /**
  * Reset form element properties that are easy to forget to
@@ -314,23 +300,12 @@ a {
  *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210
  */
 
-img,
-svg {
-  display: block; /* 1 */
-  vertical-align: middle; /* 2 */
-}
-
 /**
  * Constrain images and videos to the parent width and preserve
  * their intrinsic aspect ratio.
  *
  * https://github.com/mozdevs/cssremedy/issues/14
  */
-
-img {
-  max-width: 100%;
-  height: auto;
-}
 
 /**
  * Ensure the default browser behavior of the `hidden` attribute.
@@ -339,34 +314,6 @@ img {
 *, ::before, ::after {
   --tw-border-opacity: 1;
   border-color: rgba(229, 231, 235, var(--tw-border-opacity));
-}
-
-.mt-2 {
-  margin-top: 0.5rem;
-}
-
-.mr-2 {
-  margin-right: 0.5rem;
-}
-
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-
-.ml-20 {
-  margin-left: 5rem;
-}
-
-.inline-block {
-  display: inline-block;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.max-w-sm {
-  max-width: 24rem;
 }
 
 @keyframes spin {
@@ -400,83 +347,8 @@ img {
   }
 }
 
-.overflow-hidden {
-  overflow: hidden;
-}
-
-.rounded {
-  border-radius: 0.25rem;
-}
-
-.rounded-full {
-  border-radius: 9999px;
-}
-
-.bg-gray-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
-}
-
-.px-3 {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-}
-
-.px-6 {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
-.py-1 {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-.text-base {
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-}
-
-.font-semibold {
-  font-weight: 600;
-}
-
-.font-bold {
-  font-weight: 700;
-}
-
-.text-gray-700 {
-  --tw-text-opacity: 1;
-  color: rgba(55, 65, 81, var(--tw-text-opacity));
-}
-
-.text-purple-500 {
-  --tw-text-opacity: 1;
-  color: rgba(139, 92, 246, var(--tw-text-opacity));
-}
-
 *, ::before, ::after {
   --tw-shadow: 0 0 #0000;
-}
-
-.shadow-lg {
-  --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 *, ::before, ::after {
