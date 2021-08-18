@@ -25,7 +25,7 @@ const columnsDataList = {
   },
   [uuid()]: {
     name: 'Done',
-    items: []
+    items: [],
   }
 }
 
@@ -95,12 +95,19 @@ function sortColumns(e,id,columns,setColumns) {
   e.preventDefault()
 
   const columnItems = columns[id].items
+  let sortedItems = []
+
+  if(columnItems[0].priority >= 3){
+    sortedItems = columnItems.sort((a,b) => a.priority - b.priority)
+  } else {
+    sortedItems = columnItems.sort((a,b) => b.priority - a.priority)
+  }
 
   setColumns({
     ...columns,
     [id] : {
       ...columns[id],
-      items: columnItems.sort((a,b) => b.priority - a.priority)
+      items: sortedItems
     }
   })
 
@@ -139,7 +146,7 @@ function App() {
                   {...provided.droppableProps}
                     ref={provided.innerRef}
                     style={{
-                      background: snapshot.isDraggingOver ? 'pink' : 'lightgray',
+                      background: snapshot.isDraggingOver ? 'gray' : 'lightgray',
                       minWidth: '400px',
                       minHeight: '500px',
                       height: '100%',
@@ -160,7 +167,7 @@ function App() {
                                 {...provided.dragHandleProps}
                                 style={{
                                   userSelect: 'none',
-                                  backgroundColor: snapshot.isDragging ? 'black':'white',
+                                  backgroundColor: snapshot.isDragging ? 'white':'white',
                                   ...provided.draggableProps.style
                                 }}
                                 class="box-border rounded-lg p-4 m-3 flex justify-between"
