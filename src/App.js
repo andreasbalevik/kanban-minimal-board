@@ -5,6 +5,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import reactDom from "react-dom";
 import { FaAngleDoubleUp, FaAngleDoubleDown, FaSortAmountUp } from 'react-icons/fa';
 import ReactTooltip from 'react-tooltip';
+import InlineEdit from "./components/inlineEdit";
 
 const itemsDataList = [
   {id: uuid(), content: 'Deploy code to ver1 and add some styling and something backendish', priority:1},
@@ -113,11 +114,27 @@ function sortColumns(e,id,columns,setColumns) {
 
 }
 
+function setEditedText(columns,id,itemIndex,text,setColumns){
+
+  var columnItems = columns[id].items
+  columnItems[itemIndex].content = text;
+  
+  setColumns({
+    ...columns,
+    [id] : {
+      ...columns[id],
+      items: columnItems
+    }
+  })
+}
+
 
 function App() {
+
   const [columns, setColumns] = useState(columnsDataList)
   return (
     <div className="flex justify-center">
+
       <div className="grid grid-flow-col auto-cols-max sm:auto-cols-min">
       <DragDropContext onDragEnd={result => onDragEndFunction(result, columns, setColumns)}>
         {Object.entries(columns).map(([id, column ]) => {
@@ -172,8 +189,12 @@ function App() {
                                 }}
                                 className="box-border rounded-lg p-4 m-3 flex justify-between"
                                 >
-                                  {item.content}
-                                  <PriorityIcon priority={item.priority}/>
+
+
+                                <InlineEdit text={item.content} 
+                                onSetText={text => setEditedText(columns,id,index,text, setColumns)}/>
+  
+                                <PriorityIcon priority={item.priority}/>
                                 </div>
                             );
                           }}
