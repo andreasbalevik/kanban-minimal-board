@@ -88,6 +88,10 @@ Add the correct text decoration in Chrome, Edge, and Safari.
 Add the correct font weight in Edge and Safari.
 */
 
+b {
+  font-weight: bolder;
+}
+
 /**
 1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
 2. Correct the odd 'em' font sizing in all browsers.
@@ -121,14 +125,29 @@ Forms
 2. Remove the margin in Firefox and Safari.
 */
 
+button {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
 /**
 Remove the inheritance of text transform in Edge and Firefox.
 1. Remove the inheritance of text transform in Firefox.
 */
 
+button { /* 1 */
+  text-transform: none;
+}
+
 /**
 Correct the inability to style clickable types in iOS and Safari.
 */
+
+button {
+  -webkit-appearance: button;
+}
 
 /**
 Remove the inner border and padding in Firefox.
@@ -150,6 +169,10 @@ Remove the padding so developers are not caught out when they zero out 'fieldset
 /**
 Add the correct vertical alignment in Chrome and Firefox.
 */
+
+progress {
+  vertical-align: baseline;
+}
 
 /**
 Correct the cursor style of increment and decrement buttons in Safari.
@@ -187,6 +210,16 @@ Add the correct display in Chrome and Safari.
 /**
  * Removes the default spacing and border for appropriate elements.
  */
+
+
+h2 {
+  margin: 0;
+}
+
+button {
+  background-color: transparent;
+  background-image: none;
+}
 
 /**
  * Tailwind custom reset styles
@@ -263,10 +296,25 @@ body {
  * https://github.com/tailwindcss/tailwindcss/issues/362
  */
 
+button {
+  cursor: pointer;
+}
+
+
+h2 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
 /**
  * Reset links to optimize for opt-in styling instead of
  * opt-out.
  */
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
 
 /**
  * Reset form element properties that are easy to forget to
@@ -275,6 +323,12 @@ body {
  * supplement a partial reset that is already applied by
  * normalize.css.
  */
+
+button {
+  padding: 0;
+  line-height: inherit;
+  color: inherit;
+}
 
 /**
  * Use the configured 'mono' font family for elements that
@@ -316,6 +370,22 @@ body {
   border-color: rgba(229, 231, 235, var(--tw-border-opacity));
 }
 
+.box-content {
+  box-sizing: content-box;
+}
+
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid;
+}
+
+.h-32 {
+  height: 8rem;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -347,8 +417,25 @@ body {
   }
 }
 
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
 *, ::before, ::after {
   --tw-shadow: 0 0 #0000;
+}
+
+.shadow-sm {
+  --tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 *, ::before, ::after {

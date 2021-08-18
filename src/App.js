@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import './assets/main.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import reactDom from "react-dom";
+import { FaAngleDoubleUp, FaAngleDoubleDown, FaGenderless } from 'react-icons/fa';
 
 const itemsDataList = [
   {id: uuid(), content: 'First task', priority:1},
@@ -25,6 +26,24 @@ const columnsDataList = {
     name: 'Done',
     items: []
   }
+}
+
+const PriorityIcon = ({priority}) => {
+
+  if(priority > 3){
+    return (
+      <FaAngleDoubleUp/>
+    )
+  } else if (priority < 3){
+    return (
+      <FaAngleDoubleDown/>
+    )
+  } else {
+    return (
+      <label></label>
+    )
+  }
+
 }
 
 const onDragEndFunction = (result, columns, setColumns) => {
@@ -87,32 +106,38 @@ function App() {
   const [columns, setColumns] = useState(columnsDataList)
   return (
     
-    <div style={{ display:'flex', justifContent: 'center', height: '100%'}}>
+    <div class="grid grid-flow-col auto-cols-max md:auto-cols-min">
     <DragDropContext onDragEnd={result => onDragEndFunction(result, columns, setColumns)}>
       {Object.entries(columns).map(([id, column ]) => {
         return (
           
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-          <button onClick={(e) => sortColumns(e, id,columns, setColumns)}>  Sort after priority </button>
+          <div class="m-9 content-center">
+          <button class="box-border" onClick={(e) => sortColumns(e, id,columns, setColumns)}>  Sort after priority </button>
           
-          <h2>{column.name}</h2>
+          <p class="text-2xl">{column.name}</p>
 
-          <div style={{margin: '8px'}}>
+          <div >
           <Droppable droppableId={id} key={id}>
             {(provided, snapshot) => {
               return (
-                <div
+
+                // THIS IS COLUMN
+                <div class=""
                 {...provided.droppableProps}
                   ref={provided.innerRef}
                   style={{
-                    background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
-                    padding: 4,
-                    width: 250,
-                    minHeight:500
+                    background: snapshot.isDraggingOver ? 'pink' : 'lightgray',
+                    minWidth: '200px',
+                    minHeight: '500px',
+                    height: '100%',
+                    overflow: 'hidden'
                   }}
                 >
                   {column.items.map((item, index) => {
                     return (
+
+
+                      // THIS IS ITEM
                       <Draggable key={item.id} draggableId={item.id} index={index}>
                         {(provided, snapshot) => {
                           return (
@@ -122,21 +147,21 @@ function App() {
                               {...provided.dragHandleProps}
                               style={{
                                 userSelect: 'none',
-                                padding: 16,
-                                margin: '0 0 8px 0',
-                                minHeight: '50px',
-                                backgroundColor: snapshot.isDragging ? 'black':'red',
-                                color: 'white',
+                                backgroundColor: snapshot.isDragging ? 'black':'white',
                                 ...provided.draggableProps.style
                               }}
+                              class="box-border p-4 m-3"
                               >
                                 {item.content}
-                                <label>Priority: {item.priority}</label>
+                                <PriorityIcon priority={item.priority}/>
                               </div>
                           );
                         }}
                             
                       </Draggable>
+
+
+
                     )
                   })}
                   {provided.placeholder}
