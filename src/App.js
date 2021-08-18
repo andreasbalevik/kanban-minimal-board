@@ -117,18 +117,18 @@ function sortColumns(e,id,columns,setColumns) {
 function App() {
   const [columns, setColumns] = useState(columnsDataList)
   return (
-    <div class="flex justify-center">
-      <div class="grid grid-flow-col auto-cols-max sm:auto-cols-min">
+    <div className="flex justify-center">
+      <div className="grid grid-flow-col auto-cols-max sm:auto-cols-min">
       <DragDropContext onDragEnd={result => onDragEndFunction(result, columns, setColumns)}>
         {Object.entries(columns).map(([id, column ]) => {
           return (
             
-            <div class="m-9 content-center">
-            <div class="flex justify-between">
+            <div className="m-9 content-center">
+            <div className="flex justify-between">
 
-              <p class="block text-2xl">{column.name}</p>
+              <p className="block text-2xl">{column.name}</p>
 
-              <button data-tip="Sort Priority" class="block" onClick={(e) => sortColumns(e, id,columns, setColumns)}>
+              <button data-tip="Sort Priority" className="block" onClick={(e) => sortColumns(e, id,columns, setColumns)}>
 
                 <FaSortAmountUp />
               </button>
@@ -142,7 +142,7 @@ function App() {
                 return (
 
                   // THIS IS COLUMN
-                  <div class=""
+                  <div
                   {...provided.droppableProps}
                     ref={provided.innerRef}
                     style={{
@@ -170,7 +170,7 @@ function App() {
                                   backgroundColor: snapshot.isDragging ? 'white':'white',
                                   ...provided.draggableProps.style
                                 }}
-                                class="box-border rounded-lg p-4 m-3 flex justify-between"
+                                className="box-border rounded-lg p-4 m-3 flex justify-between"
                                 >
                                   {item.content}
                                   <PriorityIcon priority={item.priority}/>
