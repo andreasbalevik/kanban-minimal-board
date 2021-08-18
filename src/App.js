@@ -4,6 +4,7 @@ import './assets/main.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import reactDom from "react-dom";
 import { FaAngleDoubleUp, FaAngleDoubleDown, FaSortAmountUp } from 'react-icons/fa';
+import ReactTooltip from 'react-tooltip';
 
 const itemsDataList = [
   {id: uuid(), content: 'Deploy code to ver1 and add some styling and something backendish', priority:1},
@@ -117,10 +118,14 @@ function App() {
             
             <div class="m-9 content-center">
             <div class="flex justify-between">
+
               <p class="block text-2xl">{column.name}</p>
-              <button class="block" onClick={(e) => sortColumns(e, id,columns, setColumns)}>
+
+              <button data-tip="Sort Priority" class="block" onClick={(e) => sortColumns(e, id,columns, setColumns)}>
+
                 <FaSortAmountUp />
               </button>
+
             </div>
             
 
@@ -183,6 +188,7 @@ function App() {
         })}
       </DragDropContext>
       </div>
+      <ReactTooltip />
     </div>
   );
 }
