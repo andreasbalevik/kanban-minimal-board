@@ -3,10 +3,10 @@ import { v4 as uuid } from 'uuid';
 import './assets/main.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import reactDom from "react-dom";
-import { FaAngleDoubleUp, FaAngleDoubleDown, FaGenderless } from 'react-icons/fa';
+import { FaAngleDoubleUp, FaAngleDoubleDown, FaSortAmountUp } from 'react-icons/fa';
 
 const itemsDataList = [
-  {id: uuid(), content: 'First task', priority:1},
+  {id: uuid(), content: 'Deploy code to ver1 and add some styling and something backendish', priority:1},
   {id: uuid(), content: 'Second task', priority:2},
   {id: uuid(), content: 'Third task', priority:3},
   {id: uuid(), content: 'Third task', priority:4},
@@ -32,11 +32,15 @@ const PriorityIcon = ({priority}) => {
 
   if(priority > 3){
     return (
-      <FaAngleDoubleUp/>
+      <i style={{color: 'green'}}>
+        <FaAngleDoubleUp/>
+      </i>
     )
   } else if (priority < 3){
     return (
-      <FaAngleDoubleDown/>
+      <i style={{color:'red'}}>
+        <FaAngleDoubleDown/>
+      </i>
     )
   } else {
     return (
@@ -105,75 +109,80 @@ function sortColumns(e,id,columns,setColumns) {
 function App() {
   const [columns, setColumns] = useState(columnsDataList)
   return (
-    
-    <div class="grid grid-flow-col auto-cols-max md:auto-cols-min">
-    <DragDropContext onDragEnd={result => onDragEndFunction(result, columns, setColumns)}>
-      {Object.entries(columns).map(([id, column ]) => {
-        return (
-          
-          <div class="m-9 content-center">
-          <button class="box-border" onClick={(e) => sortColumns(e, id,columns, setColumns)}>  Sort after priority </button>
-          
-          <p class="text-2xl">{column.name}</p>
+    <div class="flex justify-center">
+      <div class="grid grid-flow-col auto-cols-max sm:auto-cols-min">
+      <DragDropContext onDragEnd={result => onDragEndFunction(result, columns, setColumns)}>
+        {Object.entries(columns).map(([id, column ]) => {
+          return (
+            
+            <div class="m-9 content-center">
+            <div class="flex justify-between">
+              <p class="block text-2xl">{column.name}</p>
+              <button class="block" onClick={(e) => sortColumns(e, id,columns, setColumns)}>
+                <FaSortAmountUp />
+              </button>
+            </div>
+            
 
-          <div >
-          <Droppable droppableId={id} key={id}>
-            {(provided, snapshot) => {
-              return (
+            <div>
+            <Droppable droppableId={id} key={id}>
+              {(provided, snapshot) => {
+                return (
 
-                // THIS IS COLUMN
-                <div class=""
-                {...provided.droppableProps}
-                  ref={provided.innerRef}
-                  style={{
-                    background: snapshot.isDraggingOver ? 'pink' : 'lightgray',
-                    minWidth: '200px',
-                    minHeight: '500px',
-                    height: '100%',
-                    overflow: 'hidden'
-                  }}
-                >
-                  {column.items.map((item, index) => {
-                    return (
-
-
-                      // THIS IS ITEM
-                      <Draggable key={item.id} draggableId={item.id} index={index}>
-                        {(provided, snapshot) => {
-                          return (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              style={{
-                                userSelect: 'none',
-                                backgroundColor: snapshot.isDragging ? 'black':'white',
-                                ...provided.draggableProps.style
-                              }}
-                              class="box-border p-4 m-3"
-                              >
-                                {item.content}
-                                <PriorityIcon priority={item.priority}/>
-                              </div>
-                          );
-                        }}
-                            
-                      </Draggable>
+                  // THIS IS COLUMN
+                  <div class=""
+                  {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    style={{
+                      background: snapshot.isDraggingOver ? 'pink' : 'lightgray',
+                      minWidth: '400px',
+                      minHeight: '500px',
+                      height: '100%',
+                      overflow: 'hidden'
+                    }}
+                  >
+                    {column.items.map((item, index) => {
+                      return (
 
 
+                        // THIS IS ITEM
+                        <Draggable key={item.id} draggableId={item.id} index={index}>
+                          {(provided, snapshot) => {
+                            return (
+                              <div 
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                style={{
+                                  userSelect: 'none',
+                                  backgroundColor: snapshot.isDragging ? 'black':'white',
+                                  ...provided.draggableProps.style
+                                }}
+                                class="box-border rounded-lg p-4 m-3 flex justify-between"
+                                >
+                                  {item.content}
+                                  <PriorityIcon priority={item.priority}/>
+                                </div>
+                            );
+                          }}
+                              
+                        </Draggable>
 
-                    )
-                  })}
-                  {provided.placeholder}
-                </div>
-              )
-            }}
-          </Droppable>
-          </div>
-          </div>
-        )
-      })}
-    </DragDropContext>
+
+
+                      )
+                    })}
+                    {provided.placeholder}
+                  </div>
+                )
+              }}
+            </Droppable>
+            </div>
+            </div>
+          )
+        })}
+      </DragDropContext>
+      </div>
     </div>
   );
 }
