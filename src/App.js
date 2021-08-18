@@ -5,8 +5,11 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import reactDom from "react-dom";
 
 const itemsDataList = [
-  {id: uuid(), content: 'First task'},
-  {id: uuid(), content: 'Second task'},
+  {id: uuid(), content: 'First task', priority:1},
+  {id: uuid(), content: 'Second task', priority:2},
+  {id: uuid(), content: 'Third task', priority:3},
+  {id: uuid(), content: 'Third task', priority:4},
+  {id: uuid(), content: 'Third task', priority:5},
 ]
 
 const columnsDataList = {
@@ -62,8 +65,20 @@ const onDragEndFunction = (result, columns, setColumns) => {
       }
     })
   }
+}
 
+function sortColumns(e,id,columns,setColumns) {
+  e.preventDefault()
 
+  const columnItems = columns[id].items
+
+  setColumns({
+    ...columns,
+    [id] : {
+      ...columns[id],
+      items: columnItems.sort((a,b) => b.priority - a.priority)
+    }
+  })
 
 }
 
@@ -71,11 +86,15 @@ const onDragEndFunction = (result, columns, setColumns) => {
 function App() {
   const [columns, setColumns] = useState(columnsDataList)
   return (
+    
     <div style={{ display:'flex', justifContent: 'center', height: '100%'}}>
     <DragDropContext onDragEnd={result => onDragEndFunction(result, columns, setColumns)}>
       {Object.entries(columns).map(([id, column ]) => {
         return (
+          
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+          <button onClick={(e) => sortColumns(e, id,columns, setColumns)}>  Sort after priority </button>
+          
           <h2>{column.name}</h2>
 
           <div style={{margin: '8px'}}>
@@ -112,6 +131,7 @@ function App() {
                               }}
                               >
                                 {item.content}
+                                <label>Priority: {item.priority}</label>
                               </div>
                           );
                         }}
