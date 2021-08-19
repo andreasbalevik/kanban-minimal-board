@@ -78,6 +78,8 @@ function InlineEdit(props) {
         {props.text}
       </span>
       <textarea
+        ref={ref => ref && ref.focus()}
+        onFocus={(e)=>e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
         ref={inputRef}
         // set the width to the input length multiplied by the x height
         // it's not quite right but gets it close

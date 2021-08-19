@@ -3,16 +3,17 @@ import { v4 as uuid } from 'uuid';
 import './assets/main.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import reactDom from "react-dom";
-import { FaAngleDoubleUp, FaAngleDoubleDown, FaSortAmountUp } from 'react-icons/fa';
+import { FaSortAmountUp } from 'react-icons/fa';
 import ReactTooltip from 'react-tooltip';
 import InlineEdit from "./components/inlineEdit";
+import PriorityIcon from "./components/priorityIcon";
 
 const itemsDataList = [
   {id: uuid(), content: 'Deploy code to ver1 and add some styling and something backendish', priority:1},
-  {id: uuid(), content: 'Second task', priority:2},
-  {id: uuid(), content: 'Third task', priority:3},
-  {id: uuid(), content: 'Third task', priority:4},
-  {id: uuid(), content: 'Third task', priority:5},
+  {id: uuid(), content: 'Second task', priority:2, tags:[]},
+  {id: uuid(), content: 'Third task', priority:3, tags: []},
+  {id: uuid(), content: 'Third task', priority:4, tags: []},
+  {id: uuid(), content: 'Third task', priority:5, tags: ['one','two']},
 ]
 
 const columnsDataList = {
@@ -30,27 +31,7 @@ const columnsDataList = {
   }
 }
 
-const PriorityIcon = ({priority}) => {
 
-  if(priority > 3){
-    return (
-      <i style={{color: 'green'}}>
-        <FaAngleDoubleUp/>
-      </i>
-    )
-  } else if (priority < 3){
-    return (
-      <i style={{color:'red'}}>
-        <FaAngleDoubleDown/>
-      </i>
-    )
-  } else {
-    return (
-      <label></label>
-    )
-  }
-
-}
 
 const onDragEndFunction = (result, columns, setColumns) => {
 
@@ -92,15 +73,34 @@ const onDragEndFunction = (result, columns, setColumns) => {
   }
 }
 
+const TagLabels = ({tags}) => {
+
+
+  if(tags){
+
+    if(tags.length){
+      return "should display tags"
+    } else {
+      return ""
+    }
+  }
+
+  return ""
+}
+
 function sortColumns(e,id,columns,setColumns) {
   e.preventDefault()
 
   const columnItems = columns[id].items
   let sortedItems = []
 
-  if(columnItems[0].priority >= 3){
+  if (columnItems.length == 0) return;
+
+  if(columnItems[0].priority >= 3 && columnItems[1].priority < columnItems[0].priority){
+    console.log("first")
     sortedItems = columnItems.sort((a,b) => a.priority - b.priority)
   } else {
+    console.log("second")
     sortedItems = columnItems.sort((a,b) => b.priority - a.priority)
   }
 
@@ -151,7 +151,6 @@ function App() {
               </button>
 
             </div>
-            
 
             <div>
             <Droppable droppableId={id} key={id}>
@@ -173,7 +172,6 @@ function App() {
                     {column.items.map((item, index) => {
                       return (
 
-
                         // THIS IS ITEM
                         <Draggable key={item.id} draggableId={item.id} index={index}>
                           {(provided, snapshot) => {
@@ -187,21 +185,31 @@ function App() {
                                   backgroundColor: snapshot.isDragging ? 'white':'white',
                                   ...provided.draggableProps.style
                                 }}
-                                className="box-border rounded-lg p-4 m-3 flex justify-between"
+                                className="m-3 rounded-lg"
                                 >
 
+                                  <div className="box-border rounded-lg p-4 ml-3 mr-3 flex justify-between">
+                                    <InlineEdit text={item.content} 
+                                  onSetText={text => setEditedText(columns,id,index,text, setColumns)}/>
+                                  <PriorityIcon priority={item.priority}/>
+                                  </div>
 
-                                <InlineEdit text={item.content} 
-                                onSetText={text => setEditedText(columns,id,index,text, setColumns)}/>
+                                  <div className="p-4 pt-0 ml-3 mr-3">
+
+                                  
+                                  <TagLabels tags={item.tags}/>
+                                  
+
+
+                                  </div>
+
+                                  
   
-                                <PriorityIcon priority={item.priority}/>
                                 </div>
                             );
                           }}
                               
                         </Draggable>
-
-
 
                       )
                     })}
