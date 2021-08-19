@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import './assets/main.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import reactDom from "react-dom";
-import { FaSortAmountUp } from 'react-icons/fa';
+import { FaSortAmountUp, FaPlus } from 'react-icons/fa';
 import ReactTooltip from 'react-tooltip';
 import InlineEdit from "./components/inlineEdit";
 import PriorityIcon from "./components/priorityIcon";
@@ -19,19 +19,36 @@ const itemsDataList = [
 const columnsDataList = {
   [uuid()]: {
     name: 'Todo',
-    items: itemsDataList
+    items: itemsDataList,
+    create: true
   },
   [uuid()]: {
     name: 'In progress',
-    items: []
+    items: [],
+    create: false
   },
   [uuid()]: {
     name: 'Done',
     items: [],
+    create: false
   }
 }
 
+function createItemInColumn(e,id,columns,setColumns){
+  e.preventDefault()
+  const columnItems = columns[id].items
+  const newItemEntry = {id: uuid(), content: '<Write text>', priority:3, tags:[]};
+  
+  const newColumnItems = [newItemEntry].concat(columnItems) 
 
+  setColumns({
+    ...columns,
+    [id] : {
+      ...columns[id],
+      items: newColumnItems
+    }
+  })
+}
 
 const onDragEndFunction = (result, columns, setColumns) => {
 
@@ -113,11 +130,17 @@ function setEditedText(columns,id,itemIndex,text,setColumns){
   })
 }
 
-
 function App() {
 
   const [columns, setColumns] = useState(columnsDataList)
   return (
+    <div>
+      <div>
+
+        my navbar
+
+
+      </div>
     <div className="flex justify-center">
 
       <div className="grid grid-flow-col auto-cols-max sm:auto-cols-min">
@@ -130,10 +153,19 @@ function App() {
 
               <p className="block text-2xl">{column.name}</p>
 
-              <button data-tip="Sort Priority" className="block" onClick={(e) => sortColumns(e, id,columns, setColumns)}>
+              <div>
+
+                {column.create &&                 
+                  <button data-tip="Create task" className="pl-3" onClick={(e) => createItemInColumn(e, id,columns, setColumns)}>
+
+                    <FaPlus />
+                  </button>}
+
+              <button data-tip="Sort Priority" className="pl-3" onClick={(e) => sortColumns(e, id,columns, setColumns)}>
 
                 <FaSortAmountUp />
               </button>
+              </div>
 
             </div>
 
@@ -211,6 +243,7 @@ function App() {
       </DragDropContext>
       </div>
       <ReactTooltip />
+    </div>
     </div>
   );
 }
