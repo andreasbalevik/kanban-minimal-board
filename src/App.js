@@ -12,7 +12,7 @@ const itemsDataList = [
   {id: uuid(), content: 'Deploy code to ver1 and add some styling and something backendish', priority:1},
   {id: uuid(), content: 'Second task', priority:2, tags:[]},
   {id: uuid(), content: 'Third task', priority:3, tags: []},
-  {id: uuid(), content: 'Third task', priority:4, tags: []},
+  {id: uuid(), content: 'Third task', priority:4, tags: ['this']},
   {id: uuid(), content: 'Third task', priority:5, tags: ['one','two']},
 ]
 
@@ -73,21 +73,6 @@ const onDragEndFunction = (result, columns, setColumns) => {
   }
 }
 
-const TagLabels = ({tags}) => {
-
-
-  if(tags){
-
-    if(tags.length){
-      return "should display tags"
-    } else {
-      return ""
-    }
-  }
-
-  return ""
-}
-
 function sortColumns(e,id,columns,setColumns) {
   e.preventDefault()
 
@@ -141,7 +126,7 @@ function App() {
           return (
             
             <div className="m-9 content-center">
-            <div className="flex justify-between">
+            <div className="flex justify-between mb-5">
 
               <p className="block text-2xl">{column.name}</p>
 
@@ -188,7 +173,7 @@ function App() {
                                 className="m-3 rounded-lg"
                                 >
 
-                                  <div className="box-border rounded-lg p-4 ml-3 mr-3 flex justify-between">
+                                  <div className="box-border rounded-lg p-4 pb-2 ml-3 mr-3 flex justify-between">
                                     <InlineEdit text={item.content} 
                                   onSetText={text => setEditedText(columns,id,index,text, setColumns)}/>
                                   <PriorityIcon priority={item.priority}/>
@@ -196,15 +181,16 @@ function App() {
 
                                   <div className="p-4 pt-0 ml-3 mr-3">
 
+                                  {item.tags && item.tags.map((tag) => {
+                                    return (
+                                      <label className="mr-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-gray-600 rounded-full">
+                                        {tag}
+                                      </label>
+                                      )
+                                  })}
                                   
-                                  <TagLabels tags={item.tags}/>
-                                  
-
-
                                   </div>
 
-                                  
-  
                                 </div>
                             );
                           }}
