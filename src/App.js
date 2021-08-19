@@ -6,14 +6,16 @@ import reactDom from "react-dom";
 import { FaSortAmountUp, FaPlus } from 'react-icons/fa';
 import ReactTooltip from 'react-tooltip';
 import InlineEdit from "./components/inlineEdit";
+import InlineEditTags from "./components/inlineEditTags";
 import PriorityIcon from "./components/priorityIcon";
+import TestFunction from "./components/testComponent";
 
 const itemsDataList = [
-  {id: uuid(), content: 'Deploy code to ver1 and add some styling and something backendish', priority:1},
+  {id: uuid(), content: 'First task', priority:1},
   {id: uuid(), content: 'Second task', priority:2, tags:[]},
   {id: uuid(), content: 'Third task', priority:3, tags: []},
-  {id: uuid(), content: 'Third task', priority:4, tags: ['this']},
-  {id: uuid(), content: 'Third task', priority:5, tags: ['one','two']},
+  {id: uuid(), content: 'Fourth task', priority:4, tags: ['this']},
+  {id: uuid(), content: 'Fifth task', priority:5, tags: ['one','two']},
 ]
 
 const columnsDataList = {
@@ -213,13 +215,8 @@ function App() {
 
                                   <div className="p-4 pt-0 ml-3 mr-3">
 
-                                  {item.tags && item.tags.map((tag) => {
-                                    return (
-                                      <label className="mr-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-gray-600 rounded-full">
-                                        {tag}
-                                      </label>
-                                      )
-                                  })}
+                                  
+
                                   
                                   </div>
 
