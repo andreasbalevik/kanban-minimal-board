@@ -7,6 +7,8 @@ import ReactTooltip from 'react-tooltip';
 import InlineEdit from "./components/inlineEdit";
 import PriorityIcon from "./components/priorityIcon";
 import { Dropdown, } from 'react-bootstrap';
+import { FaEllipsisH } from 'react-icons/fa';
+
 
 const itemsDataList = [
   {id: uuid(), content: 'First task', priority:1},
@@ -34,7 +36,20 @@ const columnsDataList = {
   }
 }
 
+function deleteMe(e,setColumns,columns,id,index){
+  e.preventDefault()
+  const columnItems = columns[id].items.filter(item => item !== columns[id].items[index])
+  setColumns({
+    ...columns,
+    [id] : {
+      ...columns[id],
+      items: columnItems
+    }
+  })
+}
+
 function changePriority(e,priority,setColumns,columns,id,index){
+  e.preventDefault()
   const columnItems = columns[id].items
   columnItems[index].priority = priority;
   
@@ -208,7 +223,7 @@ function App() {
                                     <InlineEdit text={item.content} 
                                   onSetText={text => setEditedText(columns,id,index,text, setColumns)}/>
                                   
-                                  
+                                  <div>
                                   <Dropdown>
                                     <Dropdown.Toggle>
                                     <PriorityIcon priority={item.priority}/>
@@ -222,6 +237,23 @@ function App() {
                                       <Dropdown.Item onClick={(e) => changePriority(e,1,setColumns,columns,id,index)}>Don`t do  these!</Dropdown.Item>
                                     </Dropdown.Menu>
                                   </Dropdown>
+
+                                  <Dropdown>
+                                    <Dropdown.Toggle>
+                                      <i data-tip="Actions" class="mt-1" style={{color: 'black'}}>
+                                        <FaEllipsisH/>
+                                      </i>
+                                    </Dropdown.Toggle>
+
+                                    <Dropdown.Menu>
+                                      <Dropdown.Item onClick={(e) => deleteMe(e,setColumns,columns,id,index)}>Delete</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                  </Dropdown> 
+
+
+
+                                  </div>
+
                                   
                                   
                                   
