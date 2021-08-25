@@ -1,4 +1,4 @@
-import { FaAngleDoubleUp, FaAngleDoubleDown, FaSortAmountUp,FaAngleUp,FaAngleDown, FaRegQuestionCircle } from 'react-icons/fa';
+import { FaAngleDoubleUp, FaAngleDoubleDown, FaMinus,FaSortAmountUp,FaAngleUp,FaAngleDown, FaRegQuestionCircle } from 'react-icons/fa';
 import ReactTooltip from 'react-tooltip';
 
 const PriorityIcon = ({priority}) => {
@@ -15,8 +15,8 @@ const PriorityIcon = ({priority}) => {
             hint: "low priority"
         },
         3: {
-            icon: "",
-            color: 'blue',
+            icon: <FaMinus/>,
+            color: 'gray',
             hint: "no priority"
         },
         4: {

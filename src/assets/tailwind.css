@@ -31,4 +31,18 @@
   text-align: left;
 }
 
+.btn-check:active+.btn-primary, .btn-check:checked+.btn-primary, .btn-primary.active, .btn-primary:active, .show>.btn-primary.dropdown-toggle,
+.dropdown button:active,
+.dropdown button:hover {
+  background:unset;
+}
+.dropdown button {
+  border:unset;
+  background:unset;
+  padding:unset;
+}
+.dropdown button::after {
+  display:none;
+}
+
 

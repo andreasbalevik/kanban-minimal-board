@@ -2,20 +2,18 @@ import React, { useState } from "react";
 import { v4 as uuid } from 'uuid';
 import './assets/main.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import reactDom from "react-dom";
 import { FaSortAmountUp, FaPlus } from 'react-icons/fa';
 import ReactTooltip from 'react-tooltip';
 import InlineEdit from "./components/inlineEdit";
-import InlineEditTags from "./components/inlineEditTags";
 import PriorityIcon from "./components/priorityIcon";
-import TestFunction from "./components/testComponent";
+import { Dropdown, } from 'react-bootstrap';
 
 const itemsDataList = [
   {id: uuid(), content: 'First task', priority:1},
-  {id: uuid(), content: 'Second task', priority:2, tags:[]},
-  {id: uuid(), content: 'Third task', priority:3, tags: []},
-  {id: uuid(), content: 'Fourth task', priority:4, tags: ['this']},
-  {id: uuid(), content: 'Fifth task', priority:5, tags: ['one','two']},
+  {id: uuid(), content: 'Second task', priority:2},
+  {id: uuid(), content: 'Third task', priority:3},
+  {id: uuid(), content: 'Fourth task', priority:4},
+  {id: uuid(), content: 'Fifth task', priority:5},
 ]
 
 const columnsDataList = {
@@ -34,6 +32,19 @@ const columnsDataList = {
     items: [],
     create: false
   }
+}
+
+function changePriority(e,priority,setColumns,columns,id,index){
+  const columnItems = columns[id].items
+  columnItems[index].priority = priority;
+  
+  setColumns({
+    ...columns,
+    [id] : {
+      ...columns[id],
+      items: columnItems
+    }
+  })
 }
 
 function createItemInColumn(e,id,columns,setColumns){
@@ -137,40 +148,26 @@ function App() {
   const [columns, setColumns] = useState(columnsDataList)
   return (
     <div>
-      <div>
-
-        my navbar
-
-
-      </div>
+      
     <div className="flex justify-center">
 
       <div className="grid grid-flow-col auto-cols-max sm:auto-cols-min">
       <DragDropContext onDragEnd={result => onDragEndFunction(result, columns, setColumns)}>
         {Object.entries(columns).map(([id, column ]) => {
           return (
-            
             <div className="m-9 content-center">
-            <div className="flex justify-between mb-5">
-
-              <p className="block text-2xl">{column.name}</p>
-
-              <div>
-
-                {column.create &&                 
-                  <button data-tip="Create task" className="pl-3" onClick={(e) => createItemInColumn(e, id,columns, setColumns)}>
-
-                    <FaPlus />
+              <div className="flex justify-between mb-5">
+                <p className="block text-2xl">{column.name}</p>
+                <div>
+                  {column.create &&                 
+                    <button data-tip="Create task" className="pl-3" onClick={(e) => createItemInColumn(e, id,columns, setColumns)}>
+                      <FaPlus />
                   </button>}
-
-              <button data-tip="Sort Priority" className="pl-3" onClick={(e) => sortColumns(e, id,columns, setColumns)}>
-
-                <FaSortAmountUp />
-              </button>
+                <button data-tip="Sort Priority" className="pl-3" onClick={(e) => sortColumns(e, id,columns, setColumns)}>
+                  <FaSortAmountUp />
+                </button>
+                </div>
               </div>
-
-            </div>
-
             <div>
             <Droppable droppableId={id} key={id}>
               {(provided, snapshot) => {
@@ -210,14 +207,33 @@ function App() {
                                   <div className="box-border rounded-lg p-4 pb-2 ml-3 mr-3 flex justify-between">
                                     <InlineEdit text={item.content} 
                                   onSetText={text => setEditedText(columns,id,index,text, setColumns)}/>
-                                  <PriorityIcon priority={item.priority}/>
+                                  
+                                  
+                                  <Dropdown>
+                                    <Dropdown.Toggle>
+                                    <PriorityIcon priority={item.priority}/>
+                                    </Dropdown.Toggle>
+
+                                    <Dropdown.Menu>
+                                      <Dropdown.Item onClick={(e) => changePriority(e,5,setColumns,columns,id,index)}>High priority</Dropdown.Item>
+                                      <Dropdown.Item onClick={(e) => changePriority(e,4,setColumns,columns,id,index)}>Medium priority</Dropdown.Item>
+                                      <Dropdown.Item onClick={(e) => changePriority(e,3,setColumns,columns,id,index)}>No priority</Dropdown.Item>
+                                      <Dropdown.Item onClick={(e) => changePriority(e,2,setColumns,columns,id,index)}>Low priority</Dropdown.Item>
+                                      <Dropdown.Item onClick={(e) => changePriority(e,1,setColumns,columns,id,index)}>Don`t do  these!</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                  </Dropdown>
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
                                   </div>
 
                                   <div className="p-4 pt-0 ml-3 mr-3">
 
-                                  
-
-                                  
                                   </div>
 
                                 </div>
